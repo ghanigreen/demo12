@@ -1,0 +1,50 @@
+$sudo vi /etc/hosts
+192.168.0.1  puppet
+192.168.0.200 ubuntu1
+
+sudo  curl -O https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb
+
+sudo dpkg -i puppetlabs-release-pc1-xenial.deb
+
+sudo apt-get update –y
+
+sudo apt-get install puppetserver
+
+sudo ufw allow 8140
+
+sudo nano /etc/default/puppetserver
+
+sudo systemctl start puppetserver
+
+sudo systemctl status puppetserver
+
+sudo wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb
+
+sudo dpkg -i puppetlabs-release-pc1-xenial.deb
+
+sudo apt-get update
+
+sudo apt-get install puppet-agent
+
+sudo systemctl start puppet
+
+sudo systemctl enable puppet
+
+sudo /opt/puppetlabs/bin/puppet cert list
+
+sudo /opt/puppetlabs/bin/puppet cert sign ubuntu1
+
+sudo /opt/puppetlabs/bin/puppet cert sign –all
+
+vi /etc/puppetlabs/code/environments/production/manifests/site.pp
+
+
+file {'/tmp/example-ip':                                   # resource type file and filename
+ensure  => present,                                        # make sure it exists
+mode    => '0644',                                         # file permissions
+content => "The Node IP address is  ${ipaddress_eth0}!\n", # note the ipaddress_eth0 fact
+}
+
+
+sudo /opt/puppetlabs/bin/puppet agent --test
+

@@ -1,0 +1,102 @@
+//
+sudo apt-get install ntp ntpdate
+sudo ntpdate -u 0.ubuntu.pool.ntp.org
+
+
+timedatectl list-timezones
+sudo timedatectl set-timezone Europe/London
+
+
+cd /tmp
+
+wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb
+sudo vi /etc/hosts
+dpkg -i puppetlabs-release-trusty.deb
+apt-get update
+sudo apt-get install puppet-common
+apt-get install puppetmaster
+
+
+puppet --version
+3.8.7
+
+
+vim /etc/apt/preferences.d/00-puppet.pref
+
+ Add the entries in the newly created file as:
+ # /etc/apt/preferences.d/00-puppet.pref
+ Package: puppet puppet-common puppetmaster-passenger
+ Pin: version 3.8*
+ Pin-Priority: 501
+
+
+sudo vi /etc/puppet/puppet.conf
+
+ #templatedir=$confdir/templates
+ 
+  service puppetmaster stop
+  service puppetmaster start
+
+
+
+
+Client machine
+
+ sudo vi /etc/hosts
+ wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb
+ dpkg -i puppetlabs-release-trusty.deb
+ apt-get update
+ apt-get install puppet
+
+puppet --version
+3.8.7
+
+ vi/etc/apt/preferences.d/00-puppet.pref
+ Add the entries in the newly created file as: 
+ # /etc/apt/preferences.d/00-puppet.pref
+ Package: puppet puppet-common puppetmaster-passenger
+ Pin: version 3.8*
+ Pin-Priority: 501
+
+ 
+ sudo vi /etc/puppet/puppet.conf
+ 
+ #templatedir=$confdir/templates
+ #ssl_client_header = SSL_CLIENT_S_DN
+ #ssl_client_verify_header = SSL_CLIENT_VERIFY
+ 
+ [agent]
+ server = puppetserver
+ Just comment the lines as mentioned above and add the agent entries and save the file.
+
+ Next we will change the configuration file as follows:
+ sudo vi /etc/default/puppet
+ 
+ [...]
+ START=yes
+ [...]
+ 
+ service puppet start
+
+
+In Master - root user
+
+ puppet cert list
+ puppet cert sign puppetclient
+ 
+ puppet cert list -all
+ puppet agent --fingerprint
+ 
+ puppet cert clean puppetclient
+ puppet cert -c
+ 
+puppet --version
+
+puppet cert list -a
+
+
+/etc/puppetlabs/code/environments/production/manifests site.pp
+
+
+
+

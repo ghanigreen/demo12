@@ -1,0 +1,34 @@
+docker run hello-world
+
+docker pull alpine
+
+docker images
+
+docker run alpine ls -l
+
+docker ps
+
+docker run -it alpine /bin/sh
+
+
+
+
+
+
+docker run -d dockersamples/static-site
+
+docker ps
+
+docker stop a7a0e504ca3e
+docker rm   a7a0e504ca3e
+
+docker run --name static-site -e AUTHOR="Your Name" -d -P dockersamples/static-site
+e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
+
+docker-machine ip default
+
+//http://192.168.99.100:32773
+
+docker run --name static-site-2 -e AUTHOR="Your Name" -d -p 8888:80 dockersamples/static-site
+
+
